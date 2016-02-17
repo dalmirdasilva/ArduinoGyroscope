@@ -1,3 +1,38 @@
+/**
+ * Arduino - MPU6050 Gyroscope Driver
+ *
+ * Concrete implementation of a gyroscope driver for MPU6050 sensor.
+ *
+ * @author Dalmir da Silva <dalmirdasilva@gmail.com>
+ */
+
+#ifndef __ARDUINO_DRIVER_GYROSCOPE_MPU6050_H__
+#define __ARDUINO_DRIVER_GYROSCOPE_MPU6050_H__ 1
+
+/**
+ *
+ */
+class ArduinoGyroscopeMPU6050 {
+
+    /**
+     * Get X rotation.
+     */
+    int getRotationX();
+
+    /**
+     * Get Y rotation.
+     */
+    int getRotationY();
+
+    /**
+     * Get Z rotation.
+     */
+    int getRotationZ();
+};
+
+#endif /* __ARDUINO_DRIVER_GYROSCOPE_MPU6050_H__ */
+
+
 // I2Cdev library collection - MPU6050 I2C device class
 // Based on InvenSense MPU-6050 register map document rev. 2.0, 5/19/2011 (RM-MPU-6000A-00)
 // 10/3/2011 by Jeff Rowberg <jeff@rowberg.net>

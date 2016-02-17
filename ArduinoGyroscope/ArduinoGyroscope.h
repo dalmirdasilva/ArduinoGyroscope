@@ -1,8 +1,8 @@
 /**
- * Arduino - Serial Gyroscope Driver
+ * Arduino - Gyroscope Driver
  * 
- * SerialGyroscope.h
- * 
+ * Abstract interface which all gyroscope should implement.
+ *
  * @author Dalmir da Silva <dalmirdasilva@gmail.com>
  */
 
