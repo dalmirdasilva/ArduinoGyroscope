@@ -9,13 +9,17 @@
 #ifndef __ARDUINO_DRIVER_GYROSCOPE_H__
 #define __ARDUINO_DRIVER_GYROSCOPE_H__ 1
 
-class ArduinoGyroscope {
+class Gyroscope {
 
-    virtual int getRotationX() = 0;
+public:
+
+    virtual ~Gyroscope();
+
+    virtual float getRotationX() = 0;
     
-    virtual int getRotationY() = 0;
+    virtual float getRotationY() = 0;
     
-    virtual int getRotationZ() = 0;
+    virtual float getRotationZ() = 0;
 };
 
 #endif /* __ARDUINO_DRIVER_GYROSCOPE_H__ */
