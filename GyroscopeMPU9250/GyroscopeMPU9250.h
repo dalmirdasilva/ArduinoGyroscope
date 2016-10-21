@@ -29,6 +29,7 @@ class GyroscopeMPU9250 : public Gyroscope, public RegisterBasedWiredDevice {
 public:
 
     enum Register {
+        CONFIG = 0x1a,
         PWR_MGMT_1 = 0x6b,
         PWR_MGMT_2 = 0x6c,
         GYRO_CONFIG = 0x1b,
@@ -83,12 +84,15 @@ public:
      */
     enum Mask {
         GYRO_CONFIG_GYRO_FS_SEL = 0x18,
+        GYRO_CONFIG_FCHOICE_B = 0x03,
         PWR_MGMT_2_DISABLE_G = 0x07,
         PWR_MGMT_1_H_RESET = 0x80,
         PWR_MGMT_1_SLEEP = 0x40,
         PWR_MGMT_1_CYCLE = 0x20,
         PWR_MGMT_1_GYRO_STANDBY = 0x10,
-        PWR_MGMT_1_CLKSEL = 0x07
+        PWR_MGMT_1_CLKSEL = 0x0,
+        CONFIG_EXT_SYNC_SET = 0x38,
+        CONFIG_DLPF_CFG = 0x07
     };
 
     /**
@@ -149,6 +153,38 @@ public:
     };
 
     /**
+     * The DLPF is configured by DLPF_CFG, when FCHOICE_B [1:0] = 2b’00. The gyroscope and
+     * temperature sensor are filtered according to the value of DLPF_CFG and FCHOICE_B as shown in
+     * the table below. Note that FCHOICE mentioned in the table below is the inverted value of
+     * FCHOICE_B (e.g. FCHOICE=2b’00 is same as FCHOICE_B=2b’11
+     *
+     * <pre>
+     * FCHOICE  DLPF_CFG
+     * <1>  <0>     Bandwidth   Delay
+     * x    0   x   4000 Hz     0.04 ms
+     * 0    1   x   4000 Hz     0.04 ms
+     * 1    1   0   4000 Hz     0.04 ms
+     * 1    1   1   188 Hz      1.9 ms
+     * 1    1   2   98  Hz      2.8  ms
+     * 1    1   3   42 Hz       4.8 ms
+     * 1    1   4   20 Hz       8.3 ms
+     * 1    1   5   10 Hz       13.4 ms
+     * 1    1   6   5 Hz        18.6 ms
+     * 1    1   7   4000 Hz     0.04 ms
+     * </pre>
+     */
+    enum OutputDataRate {
+        ODR_0_4000HZ = 0x00,
+        ODR_1_188HZ = 0x01,
+        ODR_2_98HZ = 0x02,
+        ODR_3_42HZ = 0x03,
+        ODR_4_20HZ = 0x04,
+        ODR_5_10HZ = 0x05,
+        ODR_6_5HZ = 0x06,
+        ODR_7_4000HZ = 0x07
+    };
+
+    /**
      * Public constructor.
      *
      * @param ad0   LSBit of the device address.
@@ -166,6 +202,14 @@ public:
     float readAxisRotation(unsigned char axisRegister);
 
     void setFullScaleRange(FullScaleRange fsr);
+
+    /**
+     * Set the output data rate.
+     *
+     * @param odr       Output data rate.
+     * @see
+     */
+    void setOutputDataRate(OutputDataRate odr);
 
     void selectClock(ClockSelection cs);
 

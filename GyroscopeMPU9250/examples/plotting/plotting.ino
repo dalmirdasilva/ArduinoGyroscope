@@ -11,6 +11,8 @@ unsigned long now;
 void setup() {
     Serial.begin(9600);
     gyro.enableAxis(GyroscopeMPU9250::AXIS_XYZ);
+    gyro.setFullScaleRange(GyroscopeMPU9250::FS_SEL_1000DPS);
+    gyro.setOutputDataRate(GyroscopeMPU9250::ODR_1_188HZ);
 }
 
 void loop() {

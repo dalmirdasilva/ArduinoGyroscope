@@ -34,6 +34,10 @@ void GyroscopeMPU9250::setFullScaleRange(FullScaleRange fsr) {
     config.GYRO_FS_SEL = fsr >> 3;
 }
 
+void GyroscopeMPU9250::setOutputDataRate(OutputDataRate odr) {
+    configureRegisterBits(CONFIG, CONFIG_DLPF_CFG, (unsigned char) odr);
+}
+
 void GyroscopeMPU9250::selectClock(ClockSelection cs) {
     configureRegisterBits(PWR_MGMT_1, PWR_MGMT_1_CLKSEL, (unsigned char) cs);
 }
